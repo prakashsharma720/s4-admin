@@ -1,0 +1,122 @@
+
+
+<div class="nxl-content" >
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-left d-flex align-items-center">
+      <div class="page-header-title">
+        <h5 class="m-b-10"><?= $this->lang->line('category') ?></h5>
+      </div>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="<?= base_url('index.php/User_authentication/admin_dashboard'); ?>">
+            <?= $this->lang->line('home') ?>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="page-header-right ms-auto d-flex align-items-center">
+      <!-- Placeholder for additional actions -->
+      <?php $this->load->view('layout/alerts'); ?>
+      <div class="d-md-none d-flex align-items-center">
+        <a href="javascript:void(0)" class="page-header-right-open-toggle">
+          <i class="feather-align-right fs-20"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+<!-- Form & Table Section -->
+  <div class="main-content">
+        <div class="card card-primary card-outline">
+            <div class="card-body">
+                <div class="row">
+<!-- <div class="main-content " >
+  <div class="row">
+    <div class="col-lg-12 bg-white">
+       
+          <div class="card-body pt-4 px-4">
+            <div class="row"> -->
+              <!-- Form Section -->
+              <div class="col-md-6">
+                <?php if (!empty($id)): ?>
+                  <form class="form-horizontal" method="post" action="<?= base_url("index.php/Category/editCategory/$id") ?>">
+                    <input type="hidden" name="category_id" value="<?= $id ?>">
+                <?php else: ?>
+                  <form class="form-horizontal" method="post" action="<?= base_url("index.php/Category/add_new_category") ?>">
+                <?php endif; ?>
+
+                  <div class="form-group">
+                    <label class="control-label"><?= $this->lang->line('category_name') ?></label>
+                    <input type="text" name="category_name" class="form-control"
+                          placeholder="<?= $this->lang->line('enter_category_name') ?>"
+                          value="<?= $category_name ?>" required autofocus>
+                  </div>
+
+                  <?php if (!empty($id)): ?>
+                    <div class="form-group">
+                      <label class="control-label"><?= $this->lang->line('status') ?></label>
+                      <select class="form-control" name="flag">
+                        <option value="0"><?= $this->lang->line('active') ?></option>
+                        <option value="1"><?= $this->lang->line('de_active') ?></option>
+                      </select>
+                    </div>
+                  <?php endif; ?>
+
+                  <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary btn-block">
+                      <?= $this->lang->line('save') ?>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="col-md-6 bg-white">
+  <h5 style="background-color: white;"><?= $this->lang->line('category_list') ?></h5>
+
+  <div class="dataTables_wrapper dt-bootstrap5 no-footer shadow-sm p-3 mt-3 rounded" style="background-color: #fff;">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered table-striped dataTable no-footer align-middle" id="proposalList" aria-describedby="proposalList_info">
+        <thead class="table-light">
+          <tr>
+            <th style="background-color: white;"><?= $this->lang->line('sr_no') ?></th>
+            <th style="background-color: white;"><?= $this->lang->line('category') ?></th>
+            <th style="background-color: white;"><?= $this->lang->line('action') ?></th>
+          </tr>
+        </thead>
+        <tbody>
+                    <?php $i = 1; foreach ($categories as $category): ?>
+                      <tr>
+                        <td><?= $i++ ?></td>
+                        <td><?= $category['category_name'] ?></td>
+                        <td>
+                        <a href="<?= base_url("index.php/Category/index/" . $category['id']) ?>" class="btn btn-icon avatar-text avatar-md" style="padding: 2px 3px;">
+                          <i class="feather feather-edit-3"></i>
+                        </a>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

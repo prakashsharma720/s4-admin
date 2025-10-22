@@ -1,0 +1,257 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+//print_r($po_data);exit;
+?>
+      <?php if($this->session->flashdata('success')): ?>
+         <div class="alert alert-success alert-dismissible" >
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <h5><i class="icon fa fa-check"></i> <?= $this->lang->line('success') ?>!</h5>
+                 <?php echo $this->session->flashdata('success'); ?>
+               </div>
+          <!-- <span class="successs_mesg"><?php echo $this->session->flashdata('success'); ?></span> -->
+      <?php endif; ?>
+
+      <?php if($this->session->flashdata('failed')): ?>
+         <div class="alert alert-error alert-dismissible " >
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <h5><i class="icon fa fa-check"></i> <?= $this->lang->line('alert') ?>!</h5>
+                 <?php echo $this->session->flashdata('failed'); ?>
+               </div>
+      <?php endif; ?>
+<div class="container-fluid">
+  <div class="card card-primary card-outline">
+    <div class="card-header">
+      <span class="card-title"><?php  echo $title; ?>
+      </span>
+       <div class="pull-right error_msg">
+        <form method="post" action="<?php echo base_url(); ?>index.php/Preventive_registers/createXLS">
+
+          <?php 
+          if(!empty($conditions)){
+            foreach ($conditions as $key => $value) { ?>
+            <input type="hidden" name="<?= $key ?>" value="<?=$value ?>">
+          <?php } }?>
+           <button type="submit" class="btn btn-info"> <?= $this->lang->line('export') ?> </button>
+         </form>
+        <!-- <a class="btn btn-info" href="<?php echo base_url(); ?>index.php/Suppliers/createXLS">Export</a>   -->
+      </div>
+      
+    </div> <!-- /.card-body -->
+    <div class="card-body">
+      <form method="get" id="filterForm">
+          <div class="row">
+
+             
+              <div class="col-md-4 col-sm-3 ">
+                <label  class="control-label"><?= $this->lang->line('filter_by_area_name') ?> <span class="required">*</span></label>
+                <select name="area" class="form-control select2 employees" >
+                   
+                    <?php
+                         if ($areas): ?> 
+                          <?php 
+                            foreach ($areas as $key=>$value) : ?>
+                               <option value="<?= $key ?>"><?= $value ?></option>
+                            <?php   endforeach;  ?>
+                        <?php else: ?>
+                            <option value="0"><?= $this->lang->line('no_result') ?></option>
+                        <?php endif; ?>
+                </select>
+              </div>
+               
+             
+             <div class="col-md-4 col-sm-3">
+                      <label  class="control-label"> <?= $this->lang->line('from_date') ?></label>
+                        <input type="text" data-date-formate="dd-mm-yyyy" name="from_date" class="form-control date-picker" value="" placeholder="dd-mm-yyyy" autofocus autocomplete="off" autocomplete="off">
+                  </div>
+                  <div class="col-md-4 col-sm-3">
+                    <label  class="control-label"> <?= $this->lang->line('upto_date') ?></label>
+                      <input type="text" data-date-formate="dd-mm-yyyy" name="upto_date" class="form-control date-picker" value="" placeholder="dd-mm-yyyy" autofocus autocomplete="off" autocomplete="off">
+                </div>
+              </div>
+                <div class="row">
+                   <div class="col-md-6 col-sm-6 ">
+                   </div>
+                   <div class="col-sm-4 col-sm-4   ">
+                      <label  class="control-label" style="visibility: hidden;"> <?= $this->lang->line('grade') ?></label><br>
+                      <input type="submit" class="btn btn-primary" value="Search" /> 
+                      <!-- <label  class="control-label" style="visibility: hidden;"> Grade</label> -->
+                      <a href="<?php echo base_url(); ?>index.php/Preventive_registers/report" class="btn btn-danger" > <?= $this->lang->line('reset') ?></a>
+                  </div>
+                </div>
+            
+        </form>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="example1" class="table table-bordered ">
+          <thead>
+            <tr>
+             <!--  <th><input type="checkbox" id="master"></th> -->
+              <th ><?= $this->lang->line('sr_no') ?>.</th>
+              <th > <?= $this->lang->line('plant') ?></th>
+              <th > <?= $this->lang->line('frequency') ?></th>
+              <th  > <?= $this->lang->line('date_of_maintenance') ?></th>
+              <th  > <?= $this->lang->line('date_of_next_maintenance') ?></th>
+              <th  > <?= $this->lang->line('remark') ?> </th>
+              <th  > <?= $this->lang->line('status') ?> </th>
+              <th  > <?= $this->lang->line('reported_by') ?> </th>
+              <th  > <?= $this->lang->line('action_button') ?> </th>
+            </tr>
+          </thead>
+          <tbody>
+           <?php
+          $i=1;foreach($preventive_registers as $obj){ ?>
+              <tr <?php if($obj['status_of_work']=='Completed'){ ?> style="background-color: #e2dfdf;" <?php } ?>>
+                <!-- <td><input type="checkbox" class="sub_chk" value="<?php echo $obj['id']; ?>" /></td> -->
+                <td><?php echo $i;?></td>
+                <td><?php echo $obj['plant_name']; ?></td>
+                <td><?php echo $obj['frequency']; ?></td>
+                 <td>
+                  <?php 
+                    if($obj['date_of_maintenance']=='0000-00-00'){
+                      echo 'NA';
+                    }
+                    else{
+                      echo date('d-m-Y',strtotime($obj['date_of_maintenance']));
+                    }?>
+                </td>
+                <td>
+                  <?php 
+                    if($obj['next_maintenance_date']=='0000-00-00'){
+                      echo 'NA';
+                    }
+                    else{
+                      echo date('d-m-Y',strtotime($obj['next_maintenance_date']));
+                    }?>
+                </td>
+                <td><?php echo $obj['remark']; ?></td>
+                <td><?php echo $obj['status_of_work']; ?></td>
+                <!-- <td  ><?php  
+                    $voucher_no= $obj['worker_code']; 
+                    if($voucher_no<10){
+                    $worker_id_code='WC000'.$voucher_no;
+                    }
+                    else if(($voucher_no>=10) && ($voucher_no<=99)){
+                      $worker_id_code='WC00'.$voucher_no;
+                    }
+                    else if(($voucher_no>=100) && ($voucher_no<=999)){
+                      $worker_id_code='WC0'.$voucher_no;
+                    }
+                    else{
+                      $worker_id_code='WC'.$voucher_no;
+                    }
+                    echo $obj['worker_name'].' ('.$worker_id_code.')';
+
+                ?> -->
+                <td  >
+                  <?php  
+                    $voucher_no= $obj['emp_code']; 
+                    if($voucher_no<10){
+                    $employee_id_code='EC000'.$voucher_no;
+                    }
+                    else if(($voucher_no>=10) && ($voucher_no<=99)){
+                      $employee_id_code='EC00'.$voucher_no;
+                    }
+                    else if(($voucher_no>=100) && ($voucher_no<=999)){
+                      $employee_id_code='EC0'.$voucher_no;
+                    }
+                    else{
+                      $employee_id_code='EC'.$voucher_no;
+                    }
+                    echo $obj['emp_name'].' ('.$employee_id_code.')';
+
+                ?>
+                </td>
+                
+                <td >
+                   <!-- <a class="btn btn-xs btn-info btnEdit" data-toggle="modal" data-target="#view<?php echo $obj['id'];?>"><i style="color:#fff;"class="fa fa-eye"></i></a>  -->
+
+                  <?php if($obj['status_of_work']=='Pending'){
+                    ?>
+                 <a class="btn btn-xs btn-primary btnEdit" href="<?php echo base_url(); ?>index.php/Preventive_registers/edit/<?php echo $obj['id'];?>"><i class="fa fa-edit"></i></a>
+
+                 <a class="btn btn-xs btn-danger btnEdit" data-toggle="modal" data-target="#delete<?php echo $obj['id'];?>"><i style="color:#fff;"class="fa fa-trash"></i></a>
+                <?php } ?>
+
+                <!--   <a href="<?php //echo base_url(); ?>index.php/welcome/deleteSupplier/<?php echo $obj['id'];?>"
+                   onclick="return confirm(\'Confirm Deletion.\')">Delete</a> -->
+                </td>
+                    <div class="modal fade" id="delete<?php echo $obj['id'];?>" role="dialog">
+                      <div class="modal-dialog">
+                        <form class="form-horizontal" role="form" method="post" action="<?php echo base_url(); ?>index.php/Preventive_registers/deleteRecord/<?php echo $obj['id'];?>">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                             <h4 class="modal-title"><?= $this->lang->line('confirm_header') ?> </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           
+                          </div>
+                          <div class="modal-body">
+                            <p><?= $this->lang->line('confirm_delete') ?> ? </p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary delete_submit"> <?= $this->lang->line('yes') ?> </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"> <?= $this->lang->line('no') ?> </button>
+                          </div>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+                    
+              </tr>
+            <?php  $i++;} ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="<?php echo base_url()."assets/"; ?>plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+  $( document ).ready(function() {
+     
+    jQuery('#master').on('click', function(e) {
+    if($(this).is(':checked',true))  
+    {
+      $(".sub_chk").prop('checked', true);  
+    }  
+    else  
+    {  
+      $(".sub_chk").prop('checked',false);  
+    }  
+  });
+    jQuery('.delete_all').on('click', function(e) { 
+    var allVals = [];  
+    $(".sub_chk:checked").each(function() {  
+      allVals.push($(this).val());
+    });  
+    //alert(allVals.length); return false;  
+    if(allVals.length <=0)  
+    {  
+      alert("Please select row.");  
+    }  
+    else {  
+      WRN_PROFILE_DELETE = "Are you sure you want to delete all selected records?";  
+      var check = confirm(WRN_PROFILE_DELETE);  
+      if(check == true){  
+        var join_selected_values = allVals.join(","); 
+        $.ajax({   
+          type: "POST",  
+          url: "<?php echo base_url(); ?>index.php/Preventive_registers/deleteRecord",  
+          cache:false,  
+          data: 'ids='+join_selected_values,  
+          success: function(response)  
+          {   
+            $(".successs_mesg").html(response);
+            location.reload();
+          }   
+        });
+           
+      }  
+    }  
+  });
+
+  });
+
+</script>
