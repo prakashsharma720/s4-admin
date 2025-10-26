@@ -105,7 +105,7 @@ function sendSMS($recipient_no='9664100138', $message='hello dear'){
     echo $response;
 }
 
-public function admin_dashboard($page = 1) {
+public function admin_dashboard() {
 	// $this->session->set_userdata('logged_in', $session_data);
 	//$this->template->load('template', 'login_form');
 	$data['title'] = 'Admin Dashboard';
@@ -115,123 +115,7 @@ public function admin_dashboard($page = 1) {
 	$data['department_id']=$this->session->userdata['logged_in']['department_id'];
 	$data['role_id']=$this->session->userdata['logged_in']['role_id'];
 	$data['auth_id']=$this->session->userdata['logged_in']['auth_id'];
-	$user_id = $this->session->userdata['logged_in']['id'];
 
-	$data['leadsSummary'] = $this->login_database->leadsSummary($login_id, $data['role_id']);
-
-	$data['monthly_leads'] = $this->login_database->get_monthly_leads();
-
-	// Pagination setup
-    $limit = 50;
-    $offset = ($page - 1) * $limit;
-
-    // Latest leads
-    $data['latestLeads'] = $this->login_database->getLatestLeads($limit, $offset);
-
-    // Total leads count for pagination
-    $totalLeads = $this->login_database->getTotalLeadsCount();
-    $data['totalPages'] = ceil($totalLeads / $limit);
-    $data['currentPage'] = $page;
-
-	
-	$this->load->model('Broadcast_model');
-	$role_id = $this->session->userdata['logged_in']['role_id'];
-
-	$data['broadcasts'] = $this->Broadcast_model->get_active_messages($user_id, $data['department_id']);
-
-	// echo "<pre>";
-	// print_r($data['broadcasts']);
-	// exit;
-
-	// $this->db->where(column:'reminders.reminder_date',now()->format(format:'Y-m-d'));
-	$data['getReminder'] = $this->login_database->getReminder($login_id); 
-	// $data['getReminders'] = $this->login_database->getReminderCode();
-	// echo"<pre>";print_r($data['getReminder']);exit;
-	$data['totalleaves'] = $this->login_database->totalLeave($login_id);
-	// print_r($data['totalleaves']);exit;
-	$data['totalleavesalloted'] = $this->login_database->totalLeaveAlloted($login_id);
-	$data['thismonthleaves'] = $this->login_database->thisMonthLeaves($login_id);
-	$data['totalleads'] = $this->login_database->totalLeads($login_id);
-	$data['thismonthleads'] = $this->login_database->thisMonthLeads($login_id,$data['role_id']);
-	$data['thismonthduplicate'] = $this->login_database->thisMonthDuplicate($login_id,$data['role_id']);
-	$data['getAll'] = $this->login_database->getAll();
-	$data['todayleads'] = $this->login_database->todayLeads($login_id,$data['role_id']);
-	$data['duplicatelead'] = $this->login_database->duplicateLead($login_id,$data['role_id']);
-	$data['isduplicateleads'] = $this->login_database->isduplicateLeads($login_id,$data['role_id']);
-	$data['religousleaves'] = $this->login_database->religousLeave($login_id);
-	$data['todaytarget'] = $this->login_database->todayTarget($login_id);
-	// $data['assignLeads'] = $this->login_database->assignLeads($login_id,$data['role_id']);
-	$data['leadsFollowups'] = $this->login_database->totalLeadsfollowups($login_id,$data['role_id']);
-	$data['inProcessLeads'] = $this->login_database->inProcessLeads($login_id);
-	$data['ApprovedLeads'] = $this->login_database->ApprovedLeads($login_id);
-	$data['RejectedLeads'] = $this->login_database->RejectedLeads($login_id);
-	$data['pendingLeads'] = $this->login_database->pendingLeads($login_id);
-	$data['yesterdayLeads'] = $this->login_database->yesterdayLeads($login_id,$data['role_id']);
-	$data['yesterdayduplicateLeads'] = $this->login_database->yesterdayduplicateLeads($login_id,$data['role_id']);
-	//MArketing Leads
-	$data['NoactionmarketingLead'] = $this->login_database->NoActionLeads($login_id,$data['role_id']);
-	$data['todayMarketingleads'] = $this->login_database->todayMarketingLeads($login_id);
-	$data['inProgressMarketingLeads'] = $this->login_database->inProgressMarketingLeads($login_id,$data['role_id']);
-	$data['LastupdateMarketingLeads'] = $this->login_database->LastupdateMarketingLeads($login_id);
-	$data['DeclinedMarketingLeads'] = $this->login_database->DeclinedMarketingLeads($login_id,$data['role_id']);
-	$data['ConvertedMarketingLeads'] = $this->login_database->ConvertedMarketingLeads($login_id,$data['role_id']);
-	$data['yesterdayMarketingLeads'] = $this->login_database->yesterdayMarketingLeads($login_id);
-	$data['yesterdayNoactionmarketingLead'] = $this->login_database->yesterdayNoactionmarketingLead($login_id,$data['role_id']);
-	$data['inProgressYesterdayMarketingLeads'] = $this->login_database->inProgressYesterdayMarketingLeads($login_id,$data['role_id']);
-	$data['DeclinedYesterdayMarketingLeads'] = $this->login_database->DeclinedYesterdayMarketingLeads($login_id,$data['role_id']);
-	$data['ConvertedYesterdayMarketingLeads'] = $this->login_database->ConvertedYesterdayMarketingLeads($login_id,$data['role_id']);
-	$data['thismonthMarketingleads'] = $this->login_database->thismonthMarketingleads($login_id);
-	$data['thismonthNoActionMarketingLeads'] = $this->login_database->thismonthNoActionMarketingLeads($login_id,$data['role_id']);
-
-	$data['thismonthinProgressMarketingLeads'] = $this->login_database->thismonthinProgressMarketingLeads($login_id,$data['role_id']);
-	$data['thismonthinDeclinedMarketingLeads'] = $this->login_database->thismonthinDeclinedMarketingLeads($login_id,$data['role_id']);
-	$data['thismonthConvertedMarketingLeads'] = $this->login_database->thismonthConvertedMarketingLeads($login_id,$data['role_id']);
-	$data['datedifference']= $this->login_database->datedifference($login_id,$data['role_id']);
-
-	$data['departments'] = $this->login_database->getDepartments();
-	$data['designations'] = $this->login_database->getDesignations();
-
-	$data['latest_activities'] = $this->login_database->get_latest_activities();
-
-	$data['leads_overview'] = $this->login_database->get_leads_overview();
-	
-	//$data['thismonthleaves'] = $this->login_database->thisMonthLeave($login_id);
-
-	$this->db->select('employees.*, designations.designation as designation_name');
-	$this->db->from('employees');
-	// if($data['role_id']=='1'||$data['role_id']=='2'||$data['role_id']=='6'){
-	// 	$this->db->where(['employees.role_id'=>'3']);
-	// }
-	// else{
-	// 	$this->db->where(['employees.role_id'=>'3','id'=>$login_id]);
-	// }
-	$this->db->join('designations', 'designations.id = employees.designation_id', 'left');
-	$this->db->order_by("employees.id");
-	$query = $this->db->get();
-	$data['target']=$query->result_array();
-
-	// Total leads for progress
-	$totalLeads = $this->login_database->getTotalLeadsCountForProgress();
-	if($totalLeads == 0) $totalLeads = 1;
-
-	foreach ($data['target'] as &$emp) {
-		$emp_id = $emp['id'];
-
-		$emp['assigned_leads'] = $this->login_database->getAssignedLeadsCount($emp_id);
-
-		// $emp['progress_percent'] = round(($emp['assigned_leads'] / $totalLeads) * 100);
-		$emp['won_leads'] = $this->login_database->getWonLeadsCount($emp_id);
-
-		if ($emp['assigned_leads'] > 0) {
-			$emp['progress_percent'] = round(($emp['won_leads'] / $emp['assigned_leads']) * 100);
-		} else {
-			$emp['progress_percent'] = 0;
-		}
-	}
-
-	usort($data['target'], function($a, $b) {
-		return $b['progress_percent'] - $a['progress_percent'];
-	});
  
 	// echo"<pre>";print_r($data['target']);exit;
 	

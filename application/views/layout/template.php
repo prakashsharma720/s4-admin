@@ -8,7 +8,7 @@
     <meta name="description" content="Duralux Dashboard" />
     <meta name="keywords" content="dashboard, admin, template" />
     <meta name="author" content="flexilecode" />
-    <title>Saral ERP</title>
+    <title>S4 Smart Shop ERP</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="<?php echo base_url()."assets/"; ?>/images/favicon.ico" type="image/x-icon" />

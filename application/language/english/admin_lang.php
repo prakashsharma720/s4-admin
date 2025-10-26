@@ -3071,7 +3071,6 @@ $lang['search'] = 'Search';
 
 $lang['sr_no'] = 'Serial Number';
 $lang['job_order_date'] = 'Job Order Date';
-$lang['job_order_no'] = 'Job Order Number';
 $lang['work_description'] = 'Work Description';
 $lang['location'] = 'Location';
 $lang['assigned_to'] = 'Assigned To';
@@ -3708,7 +3707,6 @@ $lang['show_entries'] = 'Show Entries';
 $lang['entries'] = 'Entries';
 $lang['search'] = 'Search';
 $lang['sr_no'] = 'Sr. No.';
-$lang['order_id'] = 'Order ID';
 $lang['order'] = 'Order';
 $lang['ticket'] = 'Ticket';
 $lang['customer_name'] = 'Customer Name';

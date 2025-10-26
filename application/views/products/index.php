@@ -73,9 +73,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>SKU</th>
+                                            <th>Category</th>
                                             <th>Price</th>
-                                            <th>Stock</th>
+                                            <th>Image</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -84,11 +84,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <?php foreach($products as $p): ?>
                                             <tr>
                                                 <td><?= $p->id; ?></td>
-                                                <td><?= $p->product_name; ?></td>
-                                                <td><?= $p->sku; ?></td>
+                                                <td><?= $p->name; ?></td>
+                                                <td><?= $p->category_id; ?></td>
                                                 <td><?= $p->price; ?></td>
-                                                <td><?= $p->stock; ?></td>
-                                                <td><?= $p->status ? 'Active' : 'Inactive'; ?></td>
+                                                <td>
+                                                    <img src="<?php echo base_url(); ?>uploads/products/<?= $p->feature_img; ?>" style="width: 20%;"></td>
                                                 <td>
                                                     <a href="<?= site_url('products/edit/'.$p->id); ?>">Edit</a> |
                                                     <a href="<?= site_url('products/delete/'.$p->id); ?>" onclick="return confirm('Delete this product?')">Delete</a>
