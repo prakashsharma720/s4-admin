@@ -76,26 +76,45 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <th>Category</th>
                                             <th>Price</th>
                                             <th>Image</th>
-                                            <th>Status</th>
+                                            <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                   <tbody>
                                         <?php foreach($products as $p): ?>
                                             <tr>
-                                                <td><?= $p->id; ?></td>
-                                                <td><?= $p->name; ?></td>
-                                                <td><?= $p->category_id; ?></td>
-                                                <td><?= $p->price; ?></td>
+                                                <td><?= $p['id']; ?></td>
+                                                <td><?= htmlspecialchars($p['name']); ?></td>
+                                                <td><?= htmlspecialchars($p['category_name']); ?></td>
+                                                <td>₹ <?= number_format($p['price'], 2); ?></td>
                                                 <td>
-                                                    <img src="<?php echo base_url(); ?>uploads/products/<?= $p->feature_img; ?>" style="width: 20%;"></td>
+                                                    <?php if(!empty($p['feature_img'])): ?>
+                                                        <img src="<?= base_url('uploads/products/'.$p['feature_img']); ?>" class="img-thumbnail" style="width: 80px; height: auto;">
+                                                    <?php else: ?>
+                                                        <span class="text-muted">No Image</span>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td>
-                                                    <a href="<?= site_url('products/edit/'.$p->id); ?>">Edit</a> |
-                                                    <a href="<?= site_url('products/delete/'.$p->id); ?>" onclick="return confirm('Delete this product?')">Delete</a>
+                                                    <div class="text-truncate" style="max-width: 200px;" data-bs-toggle="tooltip" title="<?= htmlspecialchars(strip_tags($p['description'])); ?>">
+                                                        <?= word_limiter(strip_tags($p['description']), 15); ?>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                     <div class="hstack gap-2 justify-content-end">
+                                                     <a href="<?php echo base_url(); ?>index.php/Products/edit/<?php echo $p['id']; ?>"
+                                                        class="avatar-text avatar-md">
+                                                        <i class="feather feather-edit-3 "></i>
+                                                    </a>
+                                                     <a class="avatar-text avatar-md" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#delete<?php echo $p['id']; ?>">
+                                                        <i class="feather feather-trash"></i>
+                                                    </a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

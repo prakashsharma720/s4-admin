@@ -31,4 +31,16 @@ class Product_model extends MY_Model {
     public function delete($id) {
         return $this->db->where('id', $id)->delete('products');
     }
+    
+    public function getProductList() 
+	{
+		
+		$this->db->select('products.*,c.category_name as category_name');
+		$this->db->from('products');
+        $this->db->join('categories as c','products.category_id=c.id','left');
+		$this->db->order_by("products.id", "asc");
+		$query = $this->db->get();
+		return $query->result_array();
+
+	}
 }

@@ -9,39 +9,39 @@ class Products extends MY_Controller {
         redirect('User_authentication/index');
     }
     $this->load->model('Product_model');
-    $this->load->helper(['form', 'url']);   
+    $this->load->helper(['form', 'url','text']);   
     $this->load->library('template');
 
     }
     public function index() {
-        $data['products'] = $this->Product_model->get_all();
+        $data['products'] = $this->Product_model->getProductList();
+        // echo "<pre>";print_r( $data['products']);exit;
         $this->template->load('layout/template','products/index',$data);
     }
 
     public function add() {
         
         if ($this->input->post()) {
-            // echo "<pre>";print_r($_POST);exit;
-            
+            // echo "<pre>";print_r($_POST);print_r($_FILES);exit;
+
+             
             $data = [
-                'product_name' => $this->input->post('product_name'),
-                'sku' => $this->input->post('sku'),
-                'price' => $this->input->post('price'),
-                'discount' => $this->input->post('discount'),
-                'stock' => $this->input->post('stock'),
+                'category_id' => $this->input->post('category_id'),
+                'name' => $this->input->post('product_name'),
+                'slug' => url_title($this->input->post('product_name'), 'dash', TRUE),
                 'description' => $this->input->post('description'),
-                'status' => $this->input->post('status')
-            ];
+                'price' => $this->input->post('price'),
+                ];
 
             // Handle Image Upload
-            if (!empty($_FILES['image']['name'])) {
+            if (!empty($_FILES['featured_photo']['name'])) {
                 $config['upload_path'] = './uploads/products/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
-                $config['max_size'] = 2048;
+                $config['max_size'] = 5048;
                 $this->load->library('upload', $config);
-                if ($this->upload->do_upload('image')) {
+                if ($this->upload->do_upload('featured_photo')) {
                     $uploadData = $this->upload->data();
-                    $data['image'] = $uploadData['file_name'];
+                    $data['feature_img'] = $uploadData['file_name'];
                 }
             }
 
@@ -53,22 +53,35 @@ class Products extends MY_Controller {
         }
     }
 
-    public function edit($id) {
-        $data['product'] = $this->Product_model->get_by_id($id);
+    public function edit($product_id) {
+        $data['id'] = $product_id;
+        $data['product'] = $this->Product_model->get_by_id($product_id);
         if ($this->input->post()) {
             $updateData = [
-                'product_name' => $this->input->post('product_name'),
-                'sku' => $this->input->post('sku'),
-                'price' => $this->input->post('price'),
-                'discount' => $this->input->post('discount'),
-                'stock' => $this->input->post('stock'),
+                'category_id' => $this->input->post('category_id'),
+                'name' => $this->input->post('product_name'),
+                'slug' => url_title($this->input->post('product_name'), 'dash', TRUE),
                 'description' => $this->input->post('description'),
-                'status' => $this->input->post('status')
-            ];
-            $this->Product_model->update($id, $updateData);
+                'price' => $this->input->post('price'),
+                ];
+                 // Handle Image Upload
+            if (!empty($_FILES['featured_photo']['name'])) {
+                $config['upload_path'] = './uploads/products/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = 5048;
+                $this->load->library('upload', $config);
+                if ($this->upload->do_upload('featured_photo')) {
+                    $uploadData = $this->upload->data();
+                    $updateData['feature_img'] = $uploadData['file_name'];
+                }
+            }else{
+                 $updateData['feature_img'] = $this->input->post('old_image');
+            }
+            $this->Product_model->update($product_id, $updateData);
             redirect('products');
         } else {
-            $this->load->view('products/edit', $data);
+            $data['categories'] = $this->Product_model->getCategories();
+             $this->template->load('layout/template','products/add', $data);
         }
     }
 
