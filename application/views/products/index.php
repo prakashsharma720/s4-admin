@@ -106,12 +106,42 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                         <i class="feather feather-edit-3 "></i>
                                                     </a>
                                                      <a class="avatar-text avatar-md" data-bs-toggle="offcanvas"
-                                                        data-bs-target="#delete<?php echo $p['id']; ?>">
+                                                        data-bs-target="#deleteEmployees<?php echo $p['id']; ?>">
                                                         <i class="feather feather-trash"></i>
                                                     </a>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <div class="offcanvas offcanvas-end" tabindex="-1" id="deleteEmployees<?= $p['id']; ?>">
+                                                <form method="post" action="<?= base_url('index.php/products/deleteEmployee/' . $p['id']); ?>">
+
+                                                    <!-- Header -->
+                                                    <div class="offcanvas-header ht-80 px-4 border-bottom border-gray-5">
+                                                        <h2 class="fs-16 fw-bold mb-0"><?= $this->lang->line('confirm') ?></h2>
+                                                        <button type="button" class="btn-close btn-close-gray ms-auto"
+                                                            data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                    </div>
+
+                                                    <!-- Body -->
+                                                    <div class="offcanvas-body">
+                                                        <p class="fs-15">
+                                                            <?= $this->lang->line('confirm_delete') ?>:
+                                                            <strong><?= !empty($p['name']) ? $p['name'] : 'Unnamed Product'; ?></strong>?
+                                                        </p>
+                                                    </div>
+
+                                                    <!-- Footer -->
+                                                    <div class="px-4 gap-2 d-flex align-items-center justify-content-between ht-80 border-top border-gray-2">
+                                                        <button type="submit" class="btn btn-primary w-50">
+                                                            <?= $this->lang->line('yes') ?>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger w-50" data-bs-dismiss="offcanvas">
+                                                            <?= $this->lang->line('cancel') ?>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
                                         <?php endforeach; ?>
                                     </tbody>
 

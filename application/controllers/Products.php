@@ -56,6 +56,13 @@ class Products extends MY_Controller {
     public function edit($product_id) {
         $data['id'] = $product_id;
         $data['product'] = $this->Product_model->get_by_id($product_id);
+
+        if (isset($result['product_name']) && $data['product_name']) :
+	            $data['product_name'] = $data['product_name'];
+	        else:
+	            $data['product_name'] = '';
+	        endif;
+
         if ($this->input->post()) {
             $updateData = [
                 'category_id' => $this->input->post('category_id'),
@@ -85,8 +92,53 @@ class Products extends MY_Controller {
         }
     }
 
-    public function delete($id) {
-        $this->Product_model->delete($id);
-        redirect('products');
+    // public function delete($id) {
+    //     $this->Product_model->delete($id);
+    //     redirect('products');
+    // }
+
+  public function deleteEmployee($id = null)
+{
+    $ids = $this->input->post('ids');
+
+    if (!empty($ids)) {
+        $Datas = explode(',', $ids);
+
+        foreach ($Datas as $id) {
+            // Get record first (before deleting)
+            $result = $this->Product_model->get_by_id($id);
+
+            if (!empty($result)) {
+                $photo = $result['photo'] ?? null;
+                if (!empty($photo) && file_exists("uploads/" . $photo)) {
+                    unlink("uploads/" . $photo);
+                }
+
+                // Soft delete product
+                $this->Product_model->deleteProduct($id);
+            }
+        }
+
+        $this->session->set_flashdata('success', 'Products deleted successfully!');
+        echo "success";
+    } else {
+        // Single delete
+        $id = $this->uri->segment(3);
+
+        $result = $this->Product_model->get_by_id($id);
+        if (!empty($result)) {
+            $photo = $result['photo'] ?? null;
+            if (!empty($photo) && file_exists("uploads/" . $photo)) {
+                unlink("uploads/" . $photo);
+            }
+
+            $this->Product_model->deleteProduct($id);
+        }
+
+        $this->session->set_flashdata('success', 'Product deleted successfully!');
+        redirect('/products', 'refresh');
     }
+}
+
+
 }
