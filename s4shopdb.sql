@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2025 at 03:29 PM
+-- Generation Time: Oct 27, 2025 at 11:28 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.2.28
 
@@ -29,18 +29,35 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `category_name` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL
+  `slug` varchar(255) DEFAULT NULL,
+  `flag` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `description`, `image`, `slug`) VALUES
-(1, 'Febric', 'hello', 'ChatGPT Image Oct 17, 2025, 01_01_11 AM.png', 'febric');
+INSERT INTO `categories` (`id`, `category_name`, `description`, `image`, `slug`, `flag`) VALUES
+(1, 'Febric', 'hello', 'ChatGPT Image Oct 17, 2025, 01_01_11 AM.png', 'febric', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(15) NOT NULL,
+  `message` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -174,6 +191,59 @@ INSERT INTO `employees` (`id`, `name`, `employee_code`, `email`, `mobile_no`, `e
 (21, 'adsad', 8, 'asd@gmail.com', '1231231231', '', '', 1, 0, NULL, 1, '1', '1970-01-01', 'yash', '202cb962ac59075b964b07152d234b70', '', NULL, 'Male', '', '1970-01-01', '', '', NULL, NULL, NULL, NULL, '100', '730128', 1, '2025-06-18 19:31:38', 4, '2025-09-18 10:56:59', 0, 1, '', '', '', '', '', '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '', '', '', 0, 0),
 (22, 'asdasd', 9, 'qq@gm.com', '1231231231', '', '', 3, 0, NULL, 2, '1', '2025-06-19', 'yash', '202cb962ac59075b964b07152d234b70', '', NULL, 'Male', '', '2025-06-19', '', '', NULL, NULL, NULL, NULL, '100', NULL, 1, '2025-06-18 19:34:17', 4, '2025-09-18 10:56:59', 0, 1, '', '', '', '', '', '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '', '', '', 0, 0),
 (23, 'Deepak Sharma', 10, 'deepaksharma.muskow@gmail.com', '7690064046', '7690064046', 'Rahul Sharma', 5, 4, 'prakash@muskowl.com', 4, '6', '2023-07-01', 'deepaksharma.muskowl', '202cb962ac59075b964b07152d234b70', 'abcde1234f', NULL, 'Male', '463453453535', '1998-05-15', '', 'Jaipur', 'sdfsdf', '08:00:00', '0', '20:00:00', '100', NULL, 0, '2025-08-21 07:13:24', 1, '2025-09-18 10:56:59', 0, 0, '', 'Bank of Baroda', '7756756756567', 'BARB0KOOKAS', 'KOOKAS', 'savings', '7690064046@pthdfc', '20000.00', '0.00', '0.00', '0.00', '0.00', '20000.00', '09', '', '', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lead_csv`
+--
+
+CREATE TABLE `lead_csv` (
+  `id` int(11) NOT NULL,
+  `lead_code` varchar(100) NOT NULL,
+  `duplicate_lead_code` varchar(100) NOT NULL,
+  `date` date DEFAULT NULL,
+  `category_name` varchar(255) DEFAULT NULL,
+  `lead_title` text DEFAULT NULL,
+  `work_description` text DEFAULT NULL,
+  `contact_person` varchar(255) NOT NULL,
+  `country` varchar(250) DEFAULT NULL,
+  `mobile` varchar(200) DEFAULT NULL,
+  `city` text DEFAULT NULL,
+  `state` text DEFAULT NULL,
+  `map_link` varchar(255) DEFAULT NULL,
+  `current_location` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `lead_source` text DEFAULT NULL,
+  `lead_architect` varchar(255) DEFAULT NULL,
+  `firm_name` varchar(255) DEFAULT NULL,
+  `mediator_mobile_no` varchar(255) DEFAULT NULL,
+  `mediator_address` varchar(255) DEFAULT NULL,
+  `lead_assign` int(11) DEFAULT NULL,
+  `project_address` varchar(255) DEFAULT NULL,
+  `region_selection` varchar(50) DEFAULT NULL,
+  `lead_site_file` varchar(255) DEFAULT NULL,
+  `is_duplicate` int(11) NOT NULL,
+  `assign_to` int(11) NOT NULL,
+  `assign_by` int(11) NOT NULL,
+  `assign_date` date NOT NULL,
+  `approve_date` date NOT NULL,
+  `reject_date` date NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `action` varchar(100) DEFAULT NULL,
+  `lead_status` varchar(100) DEFAULT NULL,
+  `convert_quotation` bigint(21) DEFAULT 0,
+  `leads_priority` varchar(255) NOT NULL,
+  `edited_by` tinyint(6) NOT NULL,
+  `edited_on` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lead_csv`
+--
+
+INSERT INTO `lead_csv` (`id`, `lead_code`, `duplicate_lead_code`, `date`, `category_name`, `lead_title`, `work_description`, `contact_person`, `country`, `mobile`, `city`, `state`, `map_link`, `current_location`, `email`, `lead_source`, `lead_architect`, `firm_name`, `mediator_mobile_no`, `mediator_address`, `lead_assign`, `project_address`, `region_selection`, `lead_site_file`, `is_duplicate`, `assign_to`, `assign_by`, `assign_date`, `approve_date`, `reject_date`, `created_by`, `action`, `lead_status`, `convert_quotation`, `leads_priority`, `edited_by`, `edited_on`) VALUES
+(21, 'MUSK0001', '', '2025-10-22', 'Raw Material', 'test', NULL, 'Musk Owl', 'India', '6378884529', 'Udaipur', 'Rajasthan', 'https://www.google.com/maps/dir/?api=1&origin=24.6009029,73.7764245&destination=24.6009029,73.7764245', 'Udaipur Bypass, Debari, Girwa Tehsil, Udaipur, Rajasthan, 313003, India', 'saralstone@gmail.com', 'Field', 'Architect', 'Muskowl LLP', '7846859784', 'Udaipur\r\nhjkhj', 4, NULL, 'South', 'http://localhost:8080/CIProject/saral-erp-mgt/uploads/leads/df3f8677ab71b4cea571d3f1379a2046.jpg', 0, 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', 4, NULL, 'Won', 0, 'Medium', 0, '2025-10-24 06:41:51');
 
 -- --------------------------------------------------------
 
@@ -556,7 +626,9 @@ INSERT INTO `orders` (`id`, `user_code`, `name`, `address`, `email`, `phone`, `s
 (1, '', 'Prakash Sharma', 'Udaipur', 'prakash@gmail.com', '9664100138', '', 1, '', 1, '620.00', 'NAM016', '2025-10-18 12:07:04', 'Pending', 'Paid', 'uploads/payments/1760789216_Best-Network-Marketing-Tips-from-MLM-Leaders.jpg'),
 (2, '', 'Prakash Sharma', 'sdas', 'prakash@muskowl.com', '9664100138', '', 2, '', 1, '800.00', 'NAM016', '2025-10-18 12:11:01', 'Pending', 'Pending', NULL),
 (305, '', 'Yash Menariya', '60,nakoda nagar,udaipur', 'yash@gmail.com', '8769900138', '', 2, '', 1, '799.00', 'NAM017', '2025-10-18 16:05:37', 'Pending', 'Paid', 'uploads/payments/1760792932_team.jpg'),
-(307, 'S4000117', 'Yash Menariya', 'muskowl udaipur', 'yash@gmail.com', '8769900138', '', 2, '', 1, '799.00', 'S4000103', '2025-10-22 07:33:18', 'Pending', 'Pending', NULL);
+(307, 'S4000117', 'Yash Menariya', 'muskowl udaipur', 'yash@gmail.com', '8769900138', '', 2, '', 1, '799.00', 'S4000103', '2025-10-22 07:33:18', 'Pending', 'Pending', NULL),
+(308, 'NAM016', 'Prakash Sharma', 'udaipur', 'prakash@muskowl.com', '9664100138', '', 1, '', 2, '1598.00', '', '2025-10-25 04:38:15', 'Pending', 'Pending', NULL),
+(309, 'S4000117', 'Yash Menariya', 'udaipur', 'yash@gmail.com', '8769900138', '', 1, '', 1, '799.00', '', '2025-10-27 05:01:35', 'Pending', 'Pending', NULL);
 
 -- --------------------------------------------------------
 
@@ -581,9 +653,37 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `sizes`, `slug`, `description`, `price`, `feature_img`, `image`) VALUES
-(1, 1, 'S4 Smart Combo Pack 1 – Fashion 1', '', 's4-smart-combo-pack-1-fashion-essentials', '<p>Upgrade your style effortlessly with the <strong>S4 Smart Combo Pack</strong>! This all-in-one fashion kit includes premium <strong>fabric</strong>, a stylish <strong>watch</strong>, trendy <strong>shades</strong>, and a classic <strong>belt</strong>&mdash;everything you need to look sharp and confident. Perfect for daily wear or gifting, this combo is designed for those who love convenience without compromising on style.</p>\r\n\r\n<ul>\r\n	<li>\r\n	<p><strong>Premium Fabric</strong> &ndash; High-quality material for comfortable and stylish wear</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Stylish Watch</strong> &ndash; Sleek design to complement any outfit</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Trendy Shades</strong> &ndash; Protect your eyes while staying fashionable</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Classic Belt</strong> &ndash; Durable and versatile to complete your look</p>\r\n	</li>\r\n</ul>\r\n', '799.00', 'WhatsApp Image 2025-10-18 at 13.18.07_b1a1ed3c.jpg', 'Screenshot 2025-10-16 202932.png'),
-(2, 1, 'S4 Smart Combo Pack 2 – Stylish Essentials', '', 's4-smart-combo-pack-2-stylish-essentials', '<p>Upgrade your style effortlessly with the <strong>S4 Smart Combo Pack</strong>! This all-in-one fashion kit includes premium <strong>fabric</strong>, a stylish <strong>watch</strong>, trendy <strong>shades</strong>, and a classic <strong>belt</strong>&mdash;everything you need to look sharp and confident. Perfect for daily wear or gifting, this combo is designed for those who love convenience without compromising on style.</p>\r\n\r\n<ul>\r\n	<li>\r\n	<p><strong>Premium Fabric</strong> &ndash; High-quality material for comfortable and stylish wear</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Stylish Watch</strong> &ndash; Sleek design to complement any outfit</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Trendy Shades</strong> &ndash; Protect your eyes while staying fashionable</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Classic Belt</strong> &ndash; Durable and versatile to complete your look</p>\r\n	</li>\r\n</ul>\r\n', '799.00', 'WhatsApp Image 2025-10-18 at 13.23.42_8cad604d.jpg', 'front-view-woman-with-shopping-bag-concept.jpg'),
-(3, 1, 'S4 Smart Combo Pack 3 – Economy Essentials', '', 's4-smart-combo-pack-3-economy-essentials', '<p><strong>What&rsquo;s Included:</strong></p>\r\n\r\n<ul>\r\n	<li>\r\n	<p><strong>Premium Fabric</strong> &ndash; High-quality material for comfortable and stylish wear</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Stylish Watch</strong> &ndash; Sleek design to complement any outfit</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Trendy Shades</strong> &ndash; Protect your eyes while staying fashionable</p>\r\n	</li>\r\n	<li>\r\n	<p><strong>Classic Belt</strong> &ndash; Durable and versatile to complete your look</p>\r\n	</li>\r\n</ul>\r\n', '799.00', 'WhatsApp Image 2025-10-18 at 13.21.24_abf23507.jpg', 'Best-Network-Marketing-Tips-from-MLM-Leaders.jpg');
+(1, 1, 'S4 Smart Classic Black Edition Combo Pack', '', 's4-smart-combo-pack-1-fashion-essentials', '<p>Embrace timeless sophistication with the S4 Smart Classic Black Edition Combo Pack &mdash; crafted for men who value style and confidence. This premium combo features rich black fabrics, a crisp white handkerchief, a classy check muffler, stylish sunglasses, and an invigorating Clensta body spray. Perfect for everyday wear or gifting, this pack brings together fashion and freshness in one smart collection.</p>\r\n\r\n<p><strong>Includes:</strong></p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>2 Black Fabrics</p>\r\n	</li>\r\n	<li>\r\n	<p>1 White Handkerchief</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Stylish Sunglasses</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Clensta Perfume Spray</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Check Muffler</p>\r\n	</li>\r\n</ul>\r\n', '799.00', '1 (1).jpg', 'Screenshot 2025-10-16 202932.png'),
+(2, 1, 'S4 Smart Elegant Style Combo Pack', '', 's4-smart-combo-pack-2-stylish-essentials', '<p>Step into effortless sophistication with the S4 Smart Elegant Style Combo Pack &mdash; designed for the modern man who values class and comfort. This premium set includes elegant white and grey dotted fabrics, a crisp handkerchief, a stylish check muffler, trendy sunglasses, and a refreshing Clensta body spray. Perfect for personal use or gifting, this combo delivers a refined and confident look for any occasion.</p>\r\n\r\n<p><strong>Includes:</strong></p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>1 White Fabric</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Grey Dotted Fabric</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Stylish Sunglasses</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Clensta Perfume Spray</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Check Muffler</p>\r\n	</li>\r\n	<li>\r\n	<p>1 White Handkerchief</p>\r\n	</li>\r\n</ul>\r\n', '799.00', '1 (2).jpg', 'front-view-woman-with-shopping-bag-concept.jpg'),
+(3, 1, 'S4 Smart Elegant Style Combo Pack Black and White', '', 's4-smart-combo-pack-3-economy-essentials', '<p>Step into effortless sophistication with the S4 Smart Elegant Style Combo Pack &mdash; designed for the modern man who values class and comfort. This premium set includes elegant white and grey dotted fabrics, a crisp handkerchief, a stylish check muffler, trendy sunglasses, and a refreshing Clensta body spray. Perfect for personal use or gifting, this combo delivers a refined and confident look for any occasion.</p>\r\n\r\n<p><strong>Includes:</strong></p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>1 White Fabric</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Black Fabric</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Stylish Sunglasses</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Clensta Perfume Spray</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Check Muffler</p>\r\n	</li>\r\n	<li>\r\n	<p>1 White Handkerchief</p>\r\n	</li>\r\n</ul>\r\n', '799.00', '1 (3).jpg', 'Best-Network-Marketing-Tips-from-MLM-Leaders.jpg'),
+(10, 1, 'S4 Smart Elegant Style Combo Pack: Black Grey Printed', '', 's4-smart-elegant-style-combo-pack-black-grey-printed', '<p>Step into effortless sophistication with the S4 Smart Elegant Style Combo Pack &mdash; designed for the modern man who values class and comfort. This premium set includes elegant white and grey dotted fabrics, a crisp handkerchief, a stylish check muffler, trendy sunglasses, and a refreshing Clensta body spray. Perfect for personal use or gifting, this combo delivers a refined and confident look for any occasion.</p>\r\n\r\n<p><strong>Includes:</strong></p>\r\n\r\n<ul>\r\n	<li>\r\n	<p>1 White Fabric</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Grey Printed Fabric</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Stylish Sunglasses</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Clensta Perfume Spray</p>\r\n	</li>\r\n	<li>\r\n	<p>1 Check Muffler</p>\r\n	</li>\r\n	<li>\r\n	<p>1 White Handkerchief</p>\r\n	</li>\r\n</ul>\r\n', '799.00', '1 (4).jpg', ''),
+(13, 1, 'S4 Combo Pack 55', NULL, 's4-combo-pack-55', '<p>So you <strong>must initialize Quill </strong><a href=\"google.com\" target=\"_blank\"><strong>somewhere</strong></a>, either:</p><ol><li><strong>In the page JS</strong> (your current <code>[removed]</code> after the form) — this is the preferred approach, because now you can also attach the <code>submit</code> handler to copy the content.</li><li><strong>Or keep it in the theme JS</strong> but then you have to get the correct Quill instance in your page JS to copy the content — which is trickier.</li></ol><p><br></p>', '799.00', 'AdobeStock_315941933_Preview1.jpeg', ''),
+(14, 1, 'yash combo pack', NULL, 'yash-combo-pack', '<h3>✅ Improvements made:</h3><ol><li><strong>Image preview:</strong></li></ol><ul><li class=\"ql-indent-1\"><code>img-thumbnail</code> for nicer border.</li><li class=\"ql-indent-1\">Fixed width <code>80px</code> for uniform display.</li><li class=\"ql-indent-1\">Fallback text if no image exists.</li></ul><p><br></p>', '1799.00', 'WhatsApp_Image_2025-10-18_at_13_28_20_b0dd52d5.jpg', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(20) NOT NULL,
+  `role` varchar(200) NOT NULL,
+  `auth_id` int(11) NOT NULL,
+  `flag` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`, `auth_id`, `flag`) VALUES
+(1, 'Super Admin', 1, 0),
+(2, 'Business Operation Head', 2, 0),
+(3, 'HR Executive', 3, 0),
+(4, 'Team Leader', 4, 0),
+(5, 'Employee', 5, 0),
+(6, 'HR marketing', 6, 0);
 
 -- --------------------------------------------------------
 
@@ -636,7 +736,6 @@ INSERT INTO `users` (`id`, `user_code`, `name`, `email`, `phone`, `password`, `r
 (1, 'NAM001', 'Kirti', 'demo@gmail.com', '6375699256', '$2y$10$pcA9ecEv1JPm6gu787ZSAuUTX7nlzYPPB6osJGgW7v38kxRh.NjWW', NULL),
 (2, 'NAM002', 'sunita', 'sunita@gmail.com', '9876543211', '$2y$10$p9XLMhZrrjrukQ6tHlAQZeaYispPM1cfnwfMYXqxiKb8iZ.yl52dG', NULL),
 (3, 'NAM003', 'rakhi', 'kirtijain9347@gmail.com', '6375699256', '$2y$10$OA//inl/ugxfjDMx.7YnFOJudGQpq2tV/aKaAbBK9tPRyW8mqOtju', NULL),
-(4, 'NAM004', 'New User', 'new@example.com', '', 'test123', NULL),
 (5, 'NAM005', 'New User', 'new@example.com', '9999999999', 'test123', NULL),
 (6, 'NAM006', 'vinita', 'vinita@gmail.com', '9999999999', '$2y$10$AoLwC4qgph.liTbqJlrk0uSxMBJuXVB6RCpSX3Cevz4j0CJA2qzCW', NULL),
 (7, 'NAM007', 'sarika', 'sarika@gmail.com', '6375699256', '$2y$10$HbRrsJZtft/E3Jmyy1DQHeWcTUAvB1a4uDn5N9wWaAUwU.3TUIIPO', NULL),
@@ -666,6 +765,12 @@ ALTER TABLE `categories`
   ADD UNIQUE KEY `description` (`description`) USING HASH;
 
 --
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `departments`
 --
 ALTER TABLE `departments`
@@ -683,6 +788,12 @@ ALTER TABLE `designations`
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `lead_csv`
+--
+ALTER TABLE `lead_csv`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `menus`
@@ -712,6 +823,12 @@ ALTER TABLE `products`
   ADD UNIQUE KEY `products_slug_unique` (`slug`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `unit`
 --
 ALTER TABLE `unit`
@@ -734,6 +851,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
@@ -752,6 +875,12 @@ ALTER TABLE `employees`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- AUTO_INCREMENT for table `lead_csv`
+--
+ALTER TABLE `lead_csv`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
@@ -767,13 +896,19 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=308;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `unit`

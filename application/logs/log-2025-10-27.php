@@ -93,3 +93,9 @@ ERROR - 2025-10-27 01:23:38 --> Severity: 8192 --> htmlspecialchars(): Passing n
 ERROR - 2025-10-27 01:23:42 --> Severity: Warning --> Undefined variable $categories C:\xampp\htdocs\CI\s4-admin-portal\application\views\Lead_Module\Lead_Generation\component\filter-model.php 28
 ERROR - 2025-10-27 01:23:42 --> Severity: 8192 --> htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated C:\xampp\htdocs\CI\s4-admin-portal\application\views\products\index.php 88
 ERROR - 2025-10-27 01:23:49 --> Severity: Warning --> Undefined variable $categories C:\xampp\htdocs\CI\s4-admin-portal\application\views\Lead_Module\Lead_Generation\component\filter-model.php 28
+ERROR - 2025-10-27 11:25:45 --> Severity: Warning --> Undefined array key "logged_in" C:\xampp\htdocs\CI\s4-admin-portal\application\controllers\Products.php 8
+ERROR - 2025-10-27 11:25:45 --> Severity: Warning --> Trying to access array offset on value of type null C:\xampp\htdocs\CI\s4-admin-portal\application\controllers\Products.php 8
+ERROR - 2025-10-27 11:25:46 --> 404 Page Not Found: User_authentication/assets
+ERROR - 2025-10-27 11:26:03 --> Could not find the language line "back"
+ERROR - 2025-10-27 11:26:03 --> Severity: Warning --> Undefined array key "id" C:\xampp\htdocs\CI\s4-admin-portal\application\views\crm_dashboard.php 371
+ERROR - 2025-10-27 11:26:10 --> Severity: Warning --> Undefined variable $categories C:\xampp\htdocs\CI\s4-admin-portal\application\views\Lead_Module\Lead_Generation\component\filter-model.php 28
