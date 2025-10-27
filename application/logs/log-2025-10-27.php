@@ -99,3 +99,4 @@ ERROR - 2025-10-27 11:25:46 --> 404 Page Not Found: User_authentication/assets
 ERROR - 2025-10-27 11:26:03 --> Could not find the language line "back"
 ERROR - 2025-10-27 11:26:03 --> Severity: Warning --> Undefined array key "id" C:\xampp\htdocs\CI\s4-admin-portal\application\views\crm_dashboard.php 371
 ERROR - 2025-10-27 11:26:10 --> Severity: Warning --> Undefined variable $categories C:\xampp\htdocs\CI\s4-admin-portal\application\views\Lead_Module\Lead_Generation\component\filter-model.php 28
+ERROR - 2025-10-27 12:19:45 --> Severity: Warning --> Undefined variable $categories C:\xampp\htdocs\CI\s4-admin-portal\application\views\Lead_Module\Lead_Generation\component\filter-model.php 28
