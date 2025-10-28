@@ -6,7 +6,9 @@ class Product_model extends MY_Model {
     }
 
     public function get_by_id($id) {
-        return $this->db->get_where('products', ['id' => $id])->row();
+        // return $this->db->get_where('products', ['id' => $id])->row();
+        return $this->db->get_where('products', ['id' => $id])->row_array();
+
     }
 
     public function insert($data) {
@@ -28,9 +30,15 @@ class Product_model extends MY_Model {
         return $this->db->where('id', $id)->update('products', $data);
     }
 
-    public function delete($id) {
-        return $this->db->where('id', $id)->delete('products');
-    }
+    // public function delete($id) {
+    //     return $this->db->where('id', $id)->delete('products');
+    // }
+
+public function deleteProduct($id)
+{
+    $this->db->where('id', $id);
+    return $this->db->delete('products');
+}
     
     public function getProductList() 
 	{
